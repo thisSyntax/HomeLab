@@ -32,8 +32,5 @@ services:
     networks:
       monitoring_networkk:
         ipv4_address: 172.35.0.3
-    volumes:
-      - ./node-exporter/config
-      - /:/rootfs:ro                          # Mount the host filesystem
-      - /sys:/sys:ro                          # Mount /sys for system stats
-      - /proc:/proc:ro                        # Mount /proc for runtime system information
+    command:
+      - '--web.listen-address=:9100'
