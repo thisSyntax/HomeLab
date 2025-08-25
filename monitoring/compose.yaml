@@ -15,8 +15,7 @@ services:
     networks:
       monitoring_network:
         ipv4_address: 172.35.0.2
-    volumes:
-      - ./cadvisor/config                       
+    volumes:                 
       - "/:/rootfs:ro"                          # Mount the host filesystem
       - "/var/run:/var/run:ro"                  # Mount the Docker socket for container monitoring
       - "/sys:/sys:ro"                          # Mount /sys for system stats
