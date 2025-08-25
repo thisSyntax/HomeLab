@@ -15,7 +15,7 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      - ${FIREWALL_VPN_INPUT_PORTS}:${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
+      - ${FIREWALL_VPN_INPUT_PORTS}:${FIREWALL_VPN_INPUT_PORTS} # vpn forwarded port, pulled from .env
       - 8090:8090 # qbittorrent web interface
       - 6881:6881 # qbittorrent torrent port
       - 8080:8080 # sabnzbd
@@ -164,7 +164,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
       - WEBUI_PORT=8090
-      - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
+      - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # vpn forwarded port, pulled from .env
     volumes:
       - ./qbittorrent:/config
       - /data:/data
