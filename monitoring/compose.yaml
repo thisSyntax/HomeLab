@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     privileged: true                          # This grants cAdvisor more permissions for system stats
     ports:
-      - 8081:8010
+      - 8081:8081
     volumes:                 
       - /:/rootfs:ro                          # Mount the host filesystem
       - /var/run:/var/run:rw                  # Mount the Docker socket for container monitoring
