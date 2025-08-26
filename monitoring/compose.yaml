@@ -17,7 +17,7 @@ services:
         ipv4_address: 172.35.0.2
     volumes:                 
       - "/:/rootfs:ro"                          # Mount the host filesystem
-      - "/var/run:/var/run:ro"                  # Mount the Docker socket for container monitoring
+      - "/var/run:/var/run:rw"                  # Mount the Docker socket for container monitoring
       - "/sys:/sys:ro"                          # Mount /sys for system stats
       - "/var/lib/docker/:/var/lib/docker:ro"   # Mount Docker data directory
     privileged: true                            # This grants cAdvisor more permissions for system stats
@@ -31,5 +31,12 @@ services:
     networks:
       monitoring_network:
         ipv4_address: 172.35.0.3
+    volumes:
+      - "/:/rootfs:ro"                          # Mount the host filesystem
+      - "/sys:/host/sys:ro"                     # Mount /sys for system stats
+      - "/proc:/host/proc:ro"
     command:
-      - '--web.listen-address=:9100'
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
