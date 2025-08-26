@@ -1,18 +1,19 @@
-node-exporter: 
-  container_name: node-exporter
-  image: prom/node-exporter:latest
-  restart: unless-stopped
-  expose:
-    - 9100
-    
-cadvisor:
-  container_name: cadvisor
-  image: google/cadvisor:latest
-  restart: unless-stopped
-  privileged: true                          # This grants cAdvisor more permissions for system stats
-  volumes:                 
-    - /:/rootfs:ro                          # Mount the host filesystem
-    - /var/run:/var/run:rw                  # Mount the Docker socket for container monitoring
-    - /sys:/sys:ro                          # Mount /sys for system stats
-    - /var/lib/docker/:/var/lib/docker:ro   # Mount Docker data directory
-    - /dev/disk/:/dev/disk:ro
+services:
+  node-exporter: 
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    expose:
+      - 9100
+      
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor:latest
+    restart: unless-stopped
+    privileged: true                          # This grants cAdvisor more permissions for system stats
+    volumes:                 
+      - /:/rootfs:ro                          # Mount the host filesystem
+      - /var/run:/var/run:rw                  # Mount the Docker socket for container monitoring
+      - /sys:/sys:ro                          # Mount /sys for system stats
+      - /var/lib/docker/:/var/lib/docker:ro   # Mount Docker data directory
+      - /dev/disk/:/dev/disk:ro
