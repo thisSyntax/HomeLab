@@ -16,11 +16,12 @@ services:
       monitoring_network:
         ipv4_address: 172.35.0.2
     volumes:                 
-      - "/:/rootfs:ro"                          # Mount the host filesystem
-      - "/var/run:/var/run:rw"                  # Mount the Docker socket for container monitoring
-      - "/sys:/sys:ro"                          # Mount /sys for system stats
-      - "/var/lib/docker/:/var/lib/docker:ro"   # Mount Docker data directory
-    privileged: true                            # This grants cAdvisor more permissions for system stats
+      - /:/rootfs:ro                          # Mount the host filesystem
+      - /var/run:/var/run:rw                  # Mount the Docker socket for container monitoring
+      - /sys:/sys:ro                          # Mount /sys for system stats
+      - /var/lib/docker/:/var/lib/docker:ro   # Mount Docker data directory
+      - /dev/disk/:/dev/disk:ro
+    privileged: true                          # This grants cAdvisor more permissions for system stats
 
   node-exporter: 
     container_name: node-exporter
@@ -32,11 +33,11 @@ services:
       monitoring_network:
         ipv4_address: 172.35.0.3
     volumes:
-      - "/:/rootfs:ro"                          # Mount the host filesystem
-      - "/sys:/host/sys:ro"                     # Mount /sys for system stats
-      - "/proc:/host/proc:ro"
+      - /:/rootfs:ro                          # Mounts the root filesystem from the host into the container.
+      - /sys:/host/sys:ro                     # Mounts the /sys directory (system information) from the host to /host/sys inside the container.
+      - /proc:/host/proc:ro                   # Mounts the /proc directory (process information) from the host to /host/proc inside the container.
     command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
+      - '--path.procfs=/host/proc' 
       - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
