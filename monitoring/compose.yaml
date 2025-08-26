@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     expose:
       - 9100
+    ports:
+      - 9100:9100
       
   cadvisor:
     container_name: cadvisor
@@ -17,3 +19,7 @@ services:
       - /sys:/sys:ro                          # Mount /sys for system stats
       - /var/lib/docker/:/var/lib/docker:ro   # Mount Docker data directory
       - /dev/disk/:/dev/disk:ro
+    expose:
+      - 8080
+    ports:
+      - 8081:8080
