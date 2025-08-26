@@ -6,38 +6,21 @@ networks:
         - subnet: 172.35.0.0/24
         
 services:
+  node-exporter: 
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    expose:
+      - 9100
+      
   cadvisor:
     container_name: cadvisor
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: google/cadvisor:latest
     restart: unless-stopped
-    ports:
-      - 8081:8080 # Expose cAdvisor web UI on port 8081
-    networks:
-      monitoring_network:
-        ipv4_address: 172.35.0.2
+    privileged: true                          # This grants cAdvisor more permissions for system stats
     volumes:                 
       - /:/rootfs:ro                          # Mount the host filesystem
       - /var/run:/var/run:rw                  # Mount the Docker socket for container monitoring
       - /sys:/sys:ro                          # Mount /sys for system stats
       - /var/lib/docker/:/var/lib/docker:ro   # Mount Docker data directory
       - /dev/disk/:/dev/disk:ro
-    privileged: true                          # This grants cAdvisor more permissions for system stats
-
-  node-exporter: 
-    container_name: node-exporter
-    image: quay.io/prometheus/node-exporter:latest
-    restart: unless-stopped
-    ports:
-      - 9100:9100
-    networks:
-      monitoring_network:
-        ipv4_address: 172.35.0.3
-    volumes:
-      - /:/rootfs:ro                          # Mounts the root filesystem from the host into the container.
-      - /sys:/host/sys:ro                     # Mounts the /sys directory (system information) from the host to /host/sys inside the container.
-      - /proc:/host/proc:ro                   # Mounts the /proc directory (process information) from the host to /host/proc inside the container.
-    command:
-      - '--path.procfs=/host/proc' 
-      - '--path.sysfs=/host/sys'
-      - --collector.filesystem.ignored-mount-points
-      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
