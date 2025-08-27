@@ -24,7 +24,7 @@ services:
       servarr_network:
         ipv4_address: 172.39.0.2
     volumes:
-      - ./gluetun:/config
+      - /docker/servarr/gluetun:/config
     env_file:
       - .env
     healthcheck:
@@ -48,7 +48,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./overseer:/config
+      - /docker/servarr/overseer:/config
   
   radarr:
     container_name: radarr
@@ -65,7 +65,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./radarr:/config
+      - /docker/servarr/radarr:/config
       - /data:/data
     
   sonarr:
@@ -83,7 +83,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-    - ./sonarr:/config
+    - /docker/servarr/sonarr:/config
     - /data:/data
     
   lidarr:
@@ -100,7 +100,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./lidarr:/config
+      - /docker/servarr/lidarr:/config
       - /data:/data
   
   whisparr:
@@ -117,7 +117,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./whisparr:/config
+      - /docker/servarr/whisparr:/config
       - /data:/data
       
   bazarr:
@@ -134,7 +134,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./bazarr:/config
+      - /docker/servarr/bazarr:/config
       - /data:/data
       
   prowlarr:
@@ -147,7 +147,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./prowlarr:/config
+      - /docker/servarr/prowlarr:/config
     depends_on:
       gluetun:
         condition: service_healthy
@@ -166,7 +166,7 @@ services:
       - WEBUI_PORT=8090
       - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # vpn forwarded port, pulled from .env
     volumes:
-      - ./qbittorrent:/config
+      - /docker/servarr/qbittorrent:/config
       - /data:/data
     depends_on:
       gluetun:
@@ -183,7 +183,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - ./sabnzbd:/config
+      - /docker/servarr/sabnzbd:/config
       - /data:/data
     depends_on:
       gluetun:
