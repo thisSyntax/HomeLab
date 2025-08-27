@@ -89,6 +89,7 @@ services:
   lidarr:
     container_name: lidarr
     image: lscr.io/linuxserver/lidarr:latest
+    restart: unless-stopped
     ports:
       - "8686:8686"
     networks:
@@ -106,6 +107,7 @@ services:
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
+    restart: unless-stopped
     ports:
       - "6969:6969"
     networks:
@@ -123,6 +125,7 @@ services:
   bazarr:
     container_name: bazarr
     image: lscr.io/linuxserver/bazarr:latest
+    restart: unless-stopped
     ports:
       - "6767:6767"
     networks:
@@ -136,6 +139,20 @@ services:
     volumes:
       - /docker/servarr/bazarr:/config
       - /data:/data
+
+  notifiarr:
+    container_name: notifiarr
+    image: golift/notifiarr
+    restart: unless-stopped
+    ports:
+      - "5454:5454"
+    networks:
+      servarr_default:
+        ipv4_address: 172.39.0.9
+    volumes:
+      - /docker/servarr/notifiarr:/config
+      - /var/run/utmp:/var/run/utmp
+      - /etc/machine-id:/etc/machine-id
       
   prowlarr:
     container_name: prowlarr
