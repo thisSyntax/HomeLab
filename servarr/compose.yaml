@@ -1,6 +1,6 @@
 networks:
-  servarr_network:
-    name: servarr_network
+  servarr_default:
+    name: servarr_default
     ipam:
       config:
         - subnet: 172.39.0.0/24
@@ -21,7 +21,7 @@ services:
       - 8080:8080 # sabnzbd
       - 9696:9696 # prowlarr
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.2
     volumes:
       - /docker/servarr/gluetun:/config
@@ -40,7 +40,7 @@ services:
     ports:
       - "5055:5055"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.3
     environment:
       - PUID=${PUID}
@@ -57,7 +57,7 @@ services:
     ports:
       - "7878:7878"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.4
     environment:
       - PUID=${PUID}
@@ -75,7 +75,7 @@ services:
     ports:
       - "8989:8989"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.5
     environment:
       - PUID=${PUID}
@@ -92,7 +92,7 @@ services:
     ports:
       - "8686:8686"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.6
     environment:
       - PUID=${PUID}
@@ -109,7 +109,7 @@ services:
     ports:
       - "6969:6969"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.7
     environment:
       - PUID=${PUID}
@@ -126,7 +126,7 @@ services:
     ports:
       - "6767:6767"
     networks:
-      servarr_network:
+      servarr_default:
         ipv4_address: 172.39.0.8
     environment:
       - PUID=${PUID}
