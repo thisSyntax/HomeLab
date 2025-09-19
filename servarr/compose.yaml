@@ -15,9 +15,6 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      - ${FIREWALL_VPN_INPUT_PORTS}:${FIREWALL_VPN_INPUT_PORTS} # vpn forwarded port, pulled from .env
-      - 8090:8090 # qbittorrent web interface
-      - 6881:6881 # qbittorrent torrent port
       - 8080:8080 # sabnzbd
       - 9696:9696 # prowlarr
     networks:
@@ -186,26 +183,6 @@ services:
       - TZ=${TZ}
     volumes:
       - /docker/servarr/prowlarr:/config
-    depends_on:
-      gluetun:
-        condition: service_healthy
-        restart: true
-    network_mode: service:gluetun
-    
-  qbittorrent:
-    container_name: qbittorrent
-    image: lscr.io/linuxserver/qbittorrent:latest
-    restart: unless-stopped
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=002
-      - TZ=${TZ}
-      - WEBUI_PORT=8090
-      - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # vpn forwarded port, pulled from .env
-    volumes:
-      - /docker/servarr/qbittorrent:/config
-      - /data:/data
     depends_on:
       gluetun:
         condition: service_healthy
