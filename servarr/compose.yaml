@@ -171,7 +171,25 @@ services:
     volumes:
       - /docker/servarr/syncthing:/config
       - /data:/data
-      
+
+  arm:
+    container_name: automaticrippingmachine
+    image: automaticrippingmachine/automatic-ripping-machine:latest
+    restart: unless-stopped
+    ports:
+      - 8090:8080
+    networks:
+      servarr_default:
+        ipv4_address: 172.39.0.10
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TZ}
+    volumes:
+      - /docker/servarr/arm:/config
+      - /data:/data
+
   prowlarr:
     container_name: prowlarr
     image: lscr.io/linuxserver/prowlarr:latest
