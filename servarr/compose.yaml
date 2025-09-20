@@ -180,7 +180,7 @@ services:
       - 8090:8080
     networks:
       servarr_default:
-        ipv4_address: 172.39.0.10
+        ipv4_address: 172.39.0.11
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
