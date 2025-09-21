@@ -187,7 +187,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/arm:/config
+      - /docker/servarr/arm:/etc/arm/config
       - /data:/data
 
   prowlarr:
