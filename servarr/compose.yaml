@@ -182,13 +182,15 @@ services:
       servarr_default:
         ipv4_address: 172.39.0.11
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - ARM_UID=1001
+      - ARM_GID=1001
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/arm:/etc/arm/config
-      - /data:/data
+      - /docker/servarr/arm/home:/home/arm
+      - /docker/servarr/arm/logs:/home/arm/logs
+      - /data/media:/home/arm/media
+      - /docker/servarr/arm/config:/etc/arm/config
 
   prowlarr:
     container_name: prowlarr
