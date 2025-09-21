@@ -173,7 +173,7 @@ services:
       - /data:/data
 
   arm:
-    container_name: automaticrippingmachine
+    container_name: arm
     image: automaticrippingmachine/automatic-ripping-machine:latest
     restart: unless-stopped
     ports:
@@ -182,14 +182,17 @@ services:
       servarr_default:
         ipv4_address: 172.39.0.11
     environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
       - ARM_UID=1001
       - ARM_GID=1001
       - UMASK=002
       - TZ=${TZ}
     volumes:
       - /docker/servarr/arm/home:/home/arm
+      - /data/media/arm/music:/home/arm/music
       - /docker/servarr/arm/logs:/home/arm/logs
-      - /data/media:/home/arm/media
+      - /data/media/arm:/home/arm/media
       - /docker/servarr/arm/config:/etc/arm/config
 
   prowlarr:
