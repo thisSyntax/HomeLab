@@ -190,7 +190,6 @@ services:
       - DISABLE_BUILTIN_AUTH=false
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/syncthing:/config
       - /data:/data
 
   prowlarr:
