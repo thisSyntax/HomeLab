@@ -34,7 +34,7 @@ services:
   
   overseerr:
     container_name: overseerr
-    image: lscr.io/linuxserver/overseerr:develop
+    image: sctx/overseerr:latest
     restart: unless-stopped
     ports:
       - "5055:5055"
