@@ -32,12 +32,30 @@ services:
       timeout: 10s
       retries: 5
   
-  overseerr:
-    container_name: overseerr
-    image: sctx/overseerr:latest
+  # overseerr:
+  #   container_name: overseerr
+  #   image: sctx/overseerr:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5055:5055"
+  #   networks:
+  #     servarr_default:
+  #       ipv4_address: 172.39.0.3
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - UMASK=002
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - /docker/servarr/overseerr:/config
+
+  jellyseerr:
+    container_name: jellyseerr
+    image: ghcr.io/fallenbagel/jellyseerr:latest
     restart: unless-stopped
+    init: true
     ports:
-      - "5055:5055"
+      - 5055:5055
     networks:
       servarr_default:
         ipv4_address: 172.39.0.3
@@ -48,6 +66,13 @@ services:
       - TZ=${TZ}
     volumes:
       - /docker/servarr/overseerr:/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    
   
   radarr:
     container_name: radarr
