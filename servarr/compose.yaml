@@ -21,7 +21,7 @@ services:
       servarr_default:
         ipv4_address: 172.39.0.2
     volumes:
-      - /docker/servarr/gluetun:/config
+      - /opt/docker/servarr/gluetun:/config
     env_file:
       - .env
     environment:
@@ -48,7 +48,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/jellyseerr:/app/config
+      - /opt/docker/servarr/jellyseerr:/app/config
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
       start_period: 20s
@@ -72,7 +72,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/radarr:/config
+      - /opt/docker/servarr/radarr:/config
       - /data:/data
     
   sonarr:
@@ -90,7 +90,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-    - /docker/servarr/sonarr:/config
+    - /opt/docker/servarr/sonarr:/config
     - /data:/data
     
   lidarr:
@@ -108,7 +108,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/lidarr:/config
+      - /opt/docker/servarr/lidarr:/config
       - /data:/data
   
   whisparr:
@@ -126,7 +126,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/whisparr:/config
+      - /opt/docker/servarr/whisparr:/config
       - /data:/data
       
   bazarr:
@@ -144,7 +144,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/bazarr:/config
+      - /opt/docker/servarr/bazarr:/config
       - /data:/data
 
   notifiarr:
@@ -157,7 +157,7 @@ services:
       servarr_default:
         ipv4_address: 172.39.0.9
     volumes:
-      - /docker/servarr/notifiarr:/config
+      - /opt/docker/servarr/notifiarr:/config
       - /var/run/utmp:/var/run/utmp
       - /etc/machine-id:/etc/machine-id
 
@@ -179,7 +179,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/syncthing:/config
+      - /opt/docker/servarr/syncthing:/config
       - /data:/data
 
   prowlarr:
@@ -192,7 +192,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/prowlarr:/config
+      - /opt/docker/servarr/prowlarr:/config
     depends_on:
       gluetun:
         condition: service_healthy
@@ -208,7 +208,7 @@ services:
       - UMASK=002
       - TZ=${TZ}
     volumes:
-      - /docker/servarr/sabnzbd:/config
+      - /opt/docker/servarr/sabnzbd:/config
       - /data:/data
     depends_on:
       gluetun:
