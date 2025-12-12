@@ -26,11 +26,6 @@ services:
       - .env
     environment:
       - DNS_ADDRESS=127.0.0.11
-    healthcheck:
-      test: ping -c 1 www.google.com || exit 1
-      interval: 20s
-      timeout: 10s
-      retries: 5
 
   jellyseerr:
     container_name: jellyseerr
